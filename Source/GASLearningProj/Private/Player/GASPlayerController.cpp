@@ -5,10 +5,18 @@
 
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Interaction/EnemyInterface.h"
 
 AGASPlayerController::AGASPlayerController()
 {
 	bReplicates = true;
+}
+
+void AGASPlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+
+	
 }
 
 void AGASPlayerController::BeginPlay()
@@ -58,6 +66,63 @@ void AGASPlayerController::Move(const FInputActionValue& InputActionValue)
 		controlledPawn->AddMovementInput(forwardDir, InputAxisVector.Y);
 		controlledPawn->AddMovementInput(rightDir, InputAxisVector.X);
 	} 
+}
+
+void AGASPlayerController::CursorTrace()
+{
+	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
+	if(!CursorHit.bBlockingHit) return;
+
+	LastActor = CurrentActor;
+	CurrentActor = CursorHit.GetActor();
+
+	/*
+	 * A. LastActor is null && CurrentActor is null
+	 * -- Do nothing
+	 * B. LastActor is null && CurrentActor is valid
+	 * -- Highlight CurrentActor
+	 * C. LastActor is valid && CurrentActor is null
+	 * -- UnHighlight LastActor
+	 * D. LastActor is valid && CurrentActor is valid && LastActor != CurrentActor
+	 * -- UnHighlight LastActor, then Highlight CurrentActor
+	 * E. Both actors are valid, and they are the same actor
+	 * -- Do nothing
+	 */
+	if(LastActor == nullptr && CurrentActor == nullptr)
+	{
+		// Case A
+		return;
+	}
+
+	if(LastActor == CurrentActor)
+	{
+		// Case E
+		return;
+	}
+
+	if(LastActor == nullptr && CurrentActor != nullptr)
+	{
+		// Case B
+		CurrentActor->HighlightActor();
+		return;
+	}
+
+	if(LastActor != nullptr && CurrentActor == nullptr)
+	{
+		// Case C
+		LastActor->UnHighlightActor();
+		return;
+	}
+
+	if(LastActor != nullptr && CurrentActor != nullptr && LastActor != CurrentActor)
+	{
+		// Case D
+		LastActor->UnHighlightActor();
+		CurrentActor->HighlightActor();
+		return;
+	}
+	
 }
 
 
