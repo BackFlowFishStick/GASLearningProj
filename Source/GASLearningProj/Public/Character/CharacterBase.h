@@ -14,9 +14,11 @@ class GASLEARNINGPROJ_API ACharacterBase : public ACharacter
 public:
 	ACharacterBase();
 
+	
 protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, Category="Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
+	
 };
