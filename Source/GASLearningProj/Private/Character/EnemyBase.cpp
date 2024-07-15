@@ -3,12 +3,26 @@
 
 #include "Character/EnemyBase.h"
 
+#include "GASLearningProj/GASLearningProj.h"
+
 void AEnemyBase::HighlightActor()
 {
-	bHighlighted = true;
+	//bHighlighted = true;
+
+	GetMesh()->SetRenderCustomDepth(true);
+	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+
+	Weapon->SetRenderCustomDepth(true);
+	Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+	
 }
 
 void AEnemyBase::UnHighlightActor()
 {
-	bHighlighted = false;
+	//bHighlighted = false;
+	GetMesh()->SetRenderCustomDepth(false);
+	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_DEFAULT);
+
+	Weapon->SetRenderCustomDepth(false);
+	Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_DEFAULT);
 }

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "InputMappingContext.h"
+#include "Interaction/EnemyInterface.h"
 #include "GameFramework/PlayerController.h"
 #include "GASPlayerController.generated.h"
 

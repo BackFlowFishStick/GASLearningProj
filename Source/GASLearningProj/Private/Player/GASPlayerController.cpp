@@ -5,7 +5,6 @@
 
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
-#include "Interaction/EnemyInterface.h"
 
 AGASPlayerController::AGASPlayerController()
 {
@@ -16,7 +15,7 @@ void AGASPlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 
-	
+	CursorTrace();
 }
 
 void AGASPlayerController::BeginPlay()
@@ -33,12 +32,14 @@ void AGASPlayerController::BeginPlay()
 	subSystem->AddMappingContext(GasContext, 0);
 
 	bShowMouseCursor = true;
-	DefaultMouseCursor = EMouseCursor::Default;
+	DefaultMouseCursor = EMouseCursor::Crosshairs;
 
 	FInputModeGameAndUI InputModeData;
 	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
 	InputModeData.SetHideCursorDuringCapture(false);
 	SetInputMode(InputModeData);
+	
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("GASPlayerController Started."));
 }
 
 void AGASPlayerController::SetupInputComponent()
@@ -72,11 +73,16 @@ void AGASPlayerController::CursorTrace()
 {
 	FHitResult CursorHit;
 	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
-	if(!CursorHit.bBlockingHit) return;
-
+	if(!CursorHit.bBlockingHit)
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Blue, TEXT("Did not hit anything."));
+		return;
+	}
+	
 	LastActor = CurrentActor;
 	CurrentActor = CursorHit.GetActor();
 
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, CursorHit.GetActor()->GetName());
 	/*
 	 * A. LastActor is null && CurrentActor is null
 	 * -- Do nothing
@@ -120,7 +126,6 @@ void AGASPlayerController::CursorTrace()
 		// Case D
 		LastActor->UnHighlightActor();
 		CurrentActor->HighlightActor();
-		return;
 	}
 	
 }
