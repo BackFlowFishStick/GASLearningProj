@@ -16,6 +16,8 @@ class GASLEARNINGPROJ_API AEnemyBase : public ACharacterBase, public IEnemyInter
 	GENERATED_BODY()
 
 public:
+	AEnemyBase();
+	
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
 

@@ -5,6 +5,12 @@
 
 #include "GASLearningProj/GASLearningProj.h"
 
+AEnemyBase::AEnemyBase()
+{
+	// Set Mesh blocking visibility type 
+	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+}
+
 void AEnemyBase::HighlightActor()
 {
 	//bHighlighted = true;
