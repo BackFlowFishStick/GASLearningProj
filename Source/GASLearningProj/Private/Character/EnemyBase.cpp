@@ -3,12 +3,20 @@
 
 #include "Character/EnemyBase.h"
 
+#include "AbilitySystem/GASAttributeSet.h"
+#include "AbilitySystem/GASComponentBase.h"
 #include "GASLearningProj/GASLearningProj.h"
 
 AEnemyBase::AEnemyBase()
 {
 	// Set Mesh blocking visibility type 
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+
+	AbilitySystemComponent = CreateDefaultSubobject<UGASComponentBase>("GASComponent");
+	AbilitySystemComponent->SetIsReplicated(true);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Full);
+
+	AttributeSet = CreateDefaultSubobject<UGASAttributeSet>("AttributeSet");
 }
 
 void AEnemyBase::HighlightActor()
