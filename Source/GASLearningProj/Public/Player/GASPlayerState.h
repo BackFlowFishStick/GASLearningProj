@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
 #include "GameFramework/PlayerState.h"
 #include "GASPlayerState.generated.h"
 
@@ -14,12 +15,15 @@ class UAbilitySystemComponent;
 class UAttributeSet;
 
 UCLASS()
-class GASLEARNINGPROJ_API AGASPlayerState : public APlayerState
+class GASLEARNINGPROJ_API AGASPlayerState : public APlayerState, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	AGASPlayerState();
+
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
+	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;

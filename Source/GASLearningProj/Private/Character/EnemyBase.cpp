@@ -14,7 +14,7 @@ AEnemyBase::AEnemyBase()
 
 	AbilitySystemComponent = CreateDefaultSubobject<UGASComponentBase>("GASComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
-	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Full);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
 	AttributeSet = CreateDefaultSubobject<UGASAttributeSet>("AttributeSet");
 }
