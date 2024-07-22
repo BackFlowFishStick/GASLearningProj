@@ -14,9 +14,16 @@ AEnemyBase::AEnemyBase()
 
 	AbilitySystemComponent = CreateDefaultSubobject<UGASComponentBase>("GASComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
-	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);	
 
 	AttributeSet = CreateDefaultSubobject<UGASAttributeSet>("AttributeSet");
+}
+
+void AEnemyBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 }
 
 void AEnemyBase::HighlightActor()
@@ -40,3 +47,4 @@ void AEnemyBase::UnHighlightActor()
 	Weapon->SetRenderCustomDepth(false);
 	Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_DEFAULT);
 }
+

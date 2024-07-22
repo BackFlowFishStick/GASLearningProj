@@ -18,9 +18,11 @@ class GASLEARNINGPROJ_API AEnemyBase : public ACharacterBase, public IEnemyInter
 public:
 	AEnemyBase();
 	
+	virtual void BeginPlay() override;
+	/** Enemy Interface **/
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
-
+	/** End of Enemy Interface **/
 	UPROPERTY(BlueprintReadOnly, Category="Enemy")
 	bool bHighlighted = false;
 	
