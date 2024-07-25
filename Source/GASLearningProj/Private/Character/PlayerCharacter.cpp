@@ -3,9 +3,11 @@
 
 #include "Character/PlayerCharacter.h"
 
+#include "AbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Player/GASPlayerState.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -38,3 +40,34 @@ APlayerCharacter::APlayerCharacter()
 	
 	
 }
+
+void APlayerCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	// Init ability actor info for the server
+	InitAbilityActorInfo();
+}
+
+void APlayerCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	// Init ability actor info for the server
+	InitAbilityActorInfo();
+}
+
+void APlayerCharacter::InitAbilityActorInfo()
+{
+	AGASPlayerState* GASPlayerState = GetPlayerState<AGASPlayerState>();
+
+	check(GASPlayerState);
+
+	GASPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(GASPlayerState, this);
+
+	AbilitySystemComponent = GASPlayerState->GetAbilitySystemComponent();
+
+	AttributeSet = GASPlayerState->GetAttributeSet();
+}
+
+
