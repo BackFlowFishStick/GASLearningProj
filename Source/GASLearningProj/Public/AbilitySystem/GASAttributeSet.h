@@ -13,5 +13,16 @@ UCLASS()
 class GASLEARNINGPROJ_API UGASAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
+
+public:
+	UGASAttributeSet();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	
+	UPROPERTY(BlueprintReadOnly,ReplicatedUsing = OnRep_Health)
+	FGameplayAttributeData Health;
+
+	UFUNCTION()
+	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
 	
 };
