@@ -17,9 +17,14 @@ class GASLEARNINGPROJ_API UStandardAttributeSet : public UAttributeSet
 	GENERATED_BODY()
 
 public:
-	// UPROPERTY(BlueprintReadOnly, Category="Health", ReplicatedUsing=OnRep_Health)
-	// FGameplayAttributeData Health;
-	// ATTRIBUTE_ACCESSORS(UStandardAttributeSet, Health);	
+
+	UStandardAttributeSet();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	
+	UPROPERTY(BlueprintReadOnly, Category="Health", ReplicatedUsing=OnRep_Health)
+	FGameplayAttributeData Health;
+	ATTRIBUTE_ACCESSORS(UStandardAttributeSet, Health);	
 	//
 	// UPROPERTY(BlueprintReadOnly, Category="Health", ReplicatedUsing=OnRep_HealthMax)
 	// FGameplayAttributeData HealthMax;
@@ -34,8 +39,8 @@ public:
 	//
 	// virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& data) override;
 
-	// UFUNCTION()
-	// void OnRep_Health(const FGameplayAttributeData& OldHealth);
+	UFUNCTION()
+	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
 	//
 	// UFUNCTION()
 	// void OnRep_HealthMax(const FGameplayAttributeData& CurrentHealth);
