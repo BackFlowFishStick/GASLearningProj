@@ -22,6 +22,7 @@ public:
 	/** Enemy Interface **/
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
+	
 	/** End of Enemy Interface **/
 	UPROPERTY(BlueprintReadOnly, Category="Enemy")
 	bool bHighlighted = false;

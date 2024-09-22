@@ -6,6 +6,10 @@
 
 UGASAttributeSet::UGASAttributeSet()
 {
+	InitHealth(100);
+	InitMaxHealth(100);
+	InitMana(50);
+	InitMaxMana(50);
 }
 
 void UGASAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
